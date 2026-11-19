@@ -1,0 +1,15 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/koruky-core",
+    "crates/koruky-parser",
+    "crates/koruky-tui",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[workspace.dependencies]
+thiserror = "2"

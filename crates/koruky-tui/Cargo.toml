@@ -1,0 +1,15 @@
+[package]
+name = "koruky-tui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+koruky-core = { path = "../koruky-core" }
+ratatui = "0.29"
+crossterm = "0.28"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+open = "5"
+url = "2"
+ratatui-image = { version = "8.1.1", default-features = false, features = ["image-defaults", "crossterm"] }
+image = "0.25"
