@@ -1,0 +1,44 @@
+# Maintainer: xKoyukii
+pkgname=koruky-git
+pkgver=0.1.0.r1.g26672d4
+pkgrel=1
+pkgdesc="A lightweight Rust-based anime discovery and launcher TUI"
+arch=('x86_64' 'aarch64')
+url="https://github.com/xKoyukii/KORUKY"
+license=('MIT')
+depends=('gcc-libs' 'glibc' 'xdg-utils')
+makedepends=('git' 'rustup')
+provides=('koruky')
+conflicts=('koruky')
+source=("git+https://github.com/xKoyukii/KORUKY.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/KORUKY"
+    printf '0.1.0.r%s.g%s' \
+        "$(git rev-list --count HEAD)" \
+        "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    cd "$srcdir/KORUKY"
+    cargo fetch --locked
+}
+
+build() {
+    cd "$srcdir/KORUKY"
+    cargo build --release --locked --package koruky-tui
+}
+
+check() {
+    cd "$srcdir/KORUKY"
+    cargo test --workspace --locked
+}
+
+package() {
+    cd "$srcdir/KORUKY"
+    install -Dm755 target/release/koruky-tui \
+        "$pkgdir/usr/bin/koruky-tui"
+    install -Dm644 LICENSE \
+        "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
